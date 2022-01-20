@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock %}
+<body>
+{% block content %}
+<form action="/data" method="post" enctype="multipart/form-data">
+  <input type="file" name="upload_xlsx" value="">
+  <input type="submit" name="" value="Submit">
+</form>
+
+<h3>Grafica</h3>
+<div>
+  <div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  {% block javascript%}
+  <script>
+    const ctx = document.getElementById('barChart');
+    const barChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels : {{ labelschart | safe }},
+        datasets: [{
+            label: 'Calificaciones',
+            data : {{ datachart | safe }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)'
+            ],
+            borderWidth: 1,
+            hoverBorderColor: 'black',
+            hoverBorderWidth: 2,
+            hoverBackgroundColor: 'rgba(154, 245, 140)',
+            pointHoverRadius: 5
+          }]
+      },
+      options: {
+        title: {
+                display: true,
+                text: "Calificaciones",
+                fontSize: 20
+        }
+      }
+    });
+</script>
+{% endblock %}
+</div>
+
+<h3>Mejor calificacion</h3>
+
+<h3>Peor Calificacion</h3>
+
+<h3>Promedio de todas las calificaciones</h3>
+
+
+
+{% endblock %}
+</body>
